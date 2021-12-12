@@ -1,0 +1,80 @@
+<mvc:View
+	controllerName="project1.controller.Worklist"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:semantic="sap.f.semantic">
+
+	<semantic:SemanticPage
+		id="page"
+		headerPinnable="false"
+		toggleHeaderOnTitleClick="false">
+
+		<semantic:titleHeading>
+			<Title id="_IDGenTitle1"
+				text="{i18n>worklistTitle}"
+				level="H2"/>
+        
+         
+           
+<FlexBox id="_IDGenFlexBox1" wrap="Wrap" fitContainer="true" alignItems="Center">
+						<FlexBox id="_IDGenFlexBox2" wrap="NoWrap" fitContainer="true" alignItems="Center" class="sapUiTinyMarginEnd">
+						 <Button id="ShowSelectedRow" press="onShowSelectedRow" text="Seleccionar Item" 
+         class="sapUiSmallMarginBegin" type="Emphasized"/>
+      
+         <Button id="EliminarSelectedRow" press="onSEliminarSelectedRow" text="Eliminar Item" 
+           type="Emphasized"/>
+						</FlexBox>
+					</FlexBox>
+		</semantic:titleHeading>
+
+		<semantic:content>
+ 
+  <List id="saleOrderList" 
+        items="{path: '/SalesOrderSet' ,
+                   filters : {                                       
+                        path : 'GrossAmount',
+                        operator : 'GE',
+                        value1 : '15385.85'
+                    },
+                        sorter: [{path: 'GrossAmount' , descending: false , group : true }] 
+                    }" 
+           mode="MultiSelect">
+        <items>
+            <ObjectListItem id="_IDGenObjectListItem1" 
+            title="{SalesTitle}"
+			type="Active"
+			press="onPress"
+            detailPress="handleDetailPress"
+                 	number="{
+                        parts:[{path:'GrossAmount'},{path:'CurrencyCode'}],
+                        type: 'sap.ui.model.type.Currency',
+                        formatOptions: {showMeasure: true}
+                    }"
+                    numberUnit="{CurrencyCode}">
+	           <firstStatus>
+                    <ObjectStatus id="_IDGenObjectStatus1"
+                        text="Billing Status"
+                        state="{
+                            path: 'BillingStatus',
+                            formatter: '.formatter.status'
+                        }" />
+			    </firstStatus>
+                <attributes>
+                    <ObjectAttribute id="_IDGenObjectAttribute1" title="Sale Order ID" text="{SalesOrderID}"/>
+                    <ObjectAttribute id="_IDGenObjectAttribute2" title="Sales Code" text="{Note}"/>
+                    <ObjectAttribute id="_IDGenObjectAttribute3" title="Billing Status" text="{BillingStatus}"/>
+                </attributes>
+            </ObjectListItem>
+        </items>
+    </List>
+
+
+		</semantic:content>
+
+		<semantic:sendEmailAction>
+			<semantic:SendEmailAction id="shareEmail" press=".onShareEmailPress"/>
+		</semantic:sendEmailAction>
+
+	</semantic:SemanticPage>
+
+</mvc:View>
